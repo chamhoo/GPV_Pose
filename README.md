@@ -22,9 +22,17 @@ You can find it in [the updated branch](https://github.com/lolrudy/GPV_Pose/tree
 
 
 ## Installing
-
+Original version:
 - Install the main requirements in 'requirement.txt'.
 - Install [Detectron2](https://github.com/facebookresearch/detectron2).
+
+But when we attempt to install those packages, some dependency issues occur. So we change installation sequence and make a modification on the **requirement.txt**.
+The current installation procedure is:
+```
+python -m pip install -r requirements.txt
+pip install kaolin==0.13.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-1.11.0_cu113.html
+python -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
+```
 
 ## Data Preparation
 To generate your own dataset, use the data preprocess code provided in this [git](https://github.com/mentian/object-deformnet/blob/master/preprocess/pose_data.py).
