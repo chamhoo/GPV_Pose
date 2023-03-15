@@ -23,13 +23,17 @@ device = 'cuda'
 
 
 def evaluate(argv):
+    # FLAGS.model_save record the DICT of the reults files,
+    # including the gernerated model weights and logger, Please modify this parameters from FLAGS pages
     if not os.path.exists(FLAGS.model_save):
         os.makedirs(FLAGS.model_save)
     tf.compat.v1.disable_eager_execution()
+    # a log file will be created under the FLAGS.model_save
     logger = setup_logger('eval_log', os.path.join(FLAGS.model_save, 'log_eval.txt'))
     Train_stage = 'PoseNet_only'
     FLAGS.train = False
 
+    # FLAGS.resume_model is the path of the orginal model file
     model_name = os.path.basename(FLAGS.resume_model).split('.')[0]
     # build dataset annd dataloader
 
@@ -65,6 +69,7 @@ def evaluate(argv):
                 detection_dict['pred_scales'] = np.zeros((0, 4, 4))
                 pred_results.append(detection_dict)
                 continue
+
             output_dict \
                 = network(rgb=data['roi_img'].to(device), depth=data['roi_depth'].to(device),
                           depth_normalize=data['depth_normalize'].to(device),
@@ -73,6 +78,7 @@ def evaluate(argv):
                           gt_R=None, gt_t=None, gt_s=None, mean_shape=mean_shape,
                           gt_2D=data['roi_coord_2d'].to(device), sym=sym,
                           def_mask=data['roi_mask'].to(device))
+
             p_green_R_vec = output_dict['p_green_R'].detach()
             p_red_R_vec = output_dict['p_red_R'].detach()
             p_T = output_dict['Pred_T'].detach()

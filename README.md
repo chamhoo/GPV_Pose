@@ -30,13 +30,52 @@ But when we attempt to install those packages, some dependency issues occur. So 
 The current installation procedure is:
 ```
 python -m pip install -r requirements.txt
-pip install kaolin==0.13.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-1.11.0_cu113.html
+pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio==0.10.1 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+
+pip install kaolin==0.13.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-1.10.1_cu113.html
 python -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
 ```
 
 ## Data Preparation
 To generate your own dataset, use the data preprocess code provided in this [git](https://github.com/mentian/object-deformnet/blob/master/preprocess/pose_data.py).
 Download the detection results in this [git](https://github.com/Gorilla-Lab-SCUT/DualPoseNet).
+
+```
+CAMERA
+    |- train_list.txt
+    |- val_list.txt
+    |- val
+        |- 00000
+            |- 0000_color.png
+            |- 0000_coord.png
+            |- 0000_depth.png
+            |- 0000_mask.png
+            |- 0000_meta.txt
+            |- ...
+        |- ...
+            
+Real
+    |- test_list.txt
+    |- train_list.txt (test/scene_1/0001 .....)
+    |- test
+        |- scene1
+            |- 0000_color.png
+            |- 0000_coord.png
+            |- 0000_depth.png
+            |- 0000_mask.png
+            |- 0000_meta.txt
+            |- ...
+        |- ...
+
+obj_models
+    |- camera_train.pkl
+    |- real_train.pkl
+    |- camera_val.pkl
+    |- real_test.pkl
+    |- mug_meta.pkl
+
+
+```
 
 
 ## Trained model

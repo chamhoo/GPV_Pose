@@ -4,9 +4,9 @@ import absl.flags as flags
 
 # datasets
 flags.DEFINE_integer('obj_c', 6, 'nnumber of categories')
-flags.DEFINE_string('dataset', 'Real', 'CAMERA or CAMERA+Real')
-flags.DEFINE_string('dataset_dir', '/data/zrd/datasets/NOCS', 'path to the dataset')
-flags.DEFINE_string('detection_dir', '/data/zrd/datasets/NOCS/detection_dualposenet/data/segmentation_results', 'path to detection results')
+flags.DEFINE_string('dataset', 'CAMERA', 'CAMERA or CAMERA+Real')  #  'Real', 'CAMERA or CAMERA+Real'
+flags.DEFINE_string('dataset_dir', '/home/leech/code/GPV_Pose/logs/data', 'path to the dataset')
+flags.DEFINE_string('detection_dir', '/home/leech/code/GPV_Pose/logs/segmentation_results', 'path to detection results')
 flags.DEFINE_string('per_obj', '', 'only train an specified object')
 
 # dynamic zoom in
@@ -111,10 +111,10 @@ flags.DEFINE_float('poly_power', 0.9, '')
 #model to save
 flags.DEFINE_integer('save_every', 10, '')  # save models every 'save_every' epoch
 flags.DEFINE_integer('log_every', 100, '')  # save log file every 100 iterations
-flags.DEFINE_string('model_save', 'output/modelsave_all', 'path to save checkpoint')
+flags.DEFINE_string('model_save', '/home/leech/code/GPV_Pose/logs/resultweight', 'path to save checkpoint')
 # resume
-flags.DEFINE_integer('resume', 0, '1 for resume, 0 for training from the start')
-flags.DEFINE_string('resume_model', '', 'path to the saved model')
+flags.DEFINE_integer('resume', 1, '1 for resume, 0 for training from the start')
+flags.DEFINE_string('resume_model', '/home/leech/code/GPV_Pose/logs/weights/gpv_pose_update.pth', 'path to the saved model')
 flags.DEFINE_integer('resume_point', 0, 'the epoch to continue the training')
 
 
