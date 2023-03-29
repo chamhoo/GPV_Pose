@@ -61,8 +61,48 @@ def evaluate(argv):
         for i, data in tqdm(enumerate(val_dataset, 1)):
             if data is None:
                 continue
-            data, detection_dict, gts = data
+            depth, data, detection_dict, gts = data
             mean_shape = data['mean_shape'].to(device)
+            #####
+            # import matplotlib.pyplot as plt
+            # import cv2
+            # plt.figure(figsize=(15,15))
+            # for i in range(5):
+            #     plt.subplot(4, 3, i+7)
+            #     img = data['roi_img'][i].permute(1, 2, 0).numpy().astype(int)[:, :, [2, 1, 0]]
+            #     plt.axis("off")
+            #     plt.imshow(img)
+            # plt.subplot(2, 1, 1)
+            # plt.imshow(cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB))
+            # plt.axis("off")
+            # plt.savefig("ROI.png")
+            # exit()
+            # import matplotlib.pyplot as plt
+            # import cv2
+            # plt.figure(figsize=(15,15))
+            # for i in range(5):
+            #     plt.subplot(4, 3, i+7)
+            #     img = data['roi_depth'][i].permute(1, 2, 0).numpy()
+            #     plt.axis("off")
+            #     plt.imshow(img, cmap="gray")
+            # plt.subplot(2, 1, 1)
+            # plt.imshow(depth, cmap="gray")
+            # plt.axis("off")
+            # plt.savefig("Depth.png")
+            # exit()
+            # import matplotlib.pyplot as plt
+            # plt.figure(figsize=(15,15))
+            # for i in range(5):
+            #     plt.subplot(4, 3, i+7)
+            #     img = data['roi_mask'][i][0,:,:].numpy()
+            #     plt.axis("off")
+            #     plt.imshow(img, cmap="gray")
+            # plt.subplot(2, 1, 1)
+            # plt.imshow(depth, cmap="gray")
+            # plt.axis("off")
+            # plt.savefig("defmask.png")
+            # exit()
+            #####
             sym = data['sym_info'].to(device)
             if len(data['cat_id_0base']) == 0:
                 detection_dict['pred_RTs'] = np.zeros((0, 4, 4))

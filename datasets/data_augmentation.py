@@ -36,6 +36,7 @@ def defor_2D(roi_mask, rand_r=2, rand_pro=0.3):
 # augment based on bounding box
 def defor_3D_bb(pc, R, t, s, sym=None, aug_bb=None):
     # pc  n x 3, here s must  be the original s
+    # pc_reproj represents the 3D coordinates of the points in the local coordinate system of the bounding box.
     pc_reproj = torch.mm(R.T, (pc - t.view(1, 3)).T).T  # nn x 3
     if sym[0] == 1:  # y axis symmetry
         ex = aug_bb[0]

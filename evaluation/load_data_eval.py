@@ -314,7 +314,8 @@ class PoseDataset(data.Dataset):
         data_dict['sym_info'] = torch.as_tensor(sym_infos.astype(np.float32)).contiguous()
         data_dict['mean_shape'] = torch.as_tensor(mean_shapes, dtype=torch.float32).contiguous()
         data_dict['roi_coord_2d'] = torch.as_tensor(roi_coord_2ds, dtype=torch.float32).contiguous()
-        return data_dict, detection_dict, gts
+        # return data_dict, detection_dict, gts
+        return depth, data_dict, detection_dict, gts
 
 
     def generate_aug_parameters(self, s_x=(0.8, 1.2), s_y=(0.8, 1.2), s_z=(0.8, 1.2), ax=50, ay=50, az=50, a=15):

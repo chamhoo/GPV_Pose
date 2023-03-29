@@ -25,11 +25,14 @@ class PoseNet9D(nn.Module):
         recon, face, feat = self.face_recon(points - points.mean(dim=1, keepdim=True), obj_id)
         recon = recon + points.mean(dim=1, keepdim=True)
         # handle face
+        # Bounding Box Voting
         face_normal = face[:, :, :18].view(bs, p_num, 6, 3)  # normal
         face_normal = face_normal / torch.norm(face_normal, dim=-1, keepdim=True)  # bs x nunm x 6 x 3
         face_dis = face[:, :, 18:24]  # bs x num x  6
         face_f = F.sigmoid(face[:, :, 24:])  # bs x num x 6
         #  rotation
+        # GREEN: Y
+        # RED: X
         green_R_vec = self.rot_green(feat.permute(0, 2, 1))  # b x 4
         red_R_vec = self.rot_red(feat.permute(0, 2, 1))   # b x 4
         # normalization

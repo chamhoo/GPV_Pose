@@ -31,6 +31,8 @@ def PC_sample(obj_mask, Depth, camK, coor2d):
     PC = torch.zeros([bs, samplenum, 3], dtype=torch.float32, device=Depth.device)
 
     for i in range(bs):
+        # separate instance images and fuse the invalid zone whose depth values is small than 0,
+        # caused by the depth camera
         dp_now = Depth[i, ...].squeeze()   # 256 x 256
         x_now = x_label[i, ...]   # 256 x 256
         y_now = y_label[i, ...]
@@ -41,14 +43,24 @@ def PC_sample(obj_mask, Depth, camK, coor2d):
         camK_now = camK[i, ...]
 
         # analyze camK
+        # fx and fy are the focal lengths of the camera in the x and y directions,
+        # respectively. ux and uy are the x and y coordinates of the principal point
+        # (the point where the optical axis intersects the image plane) in the image plane.
         fx = camK_now[0, 0]
         fy = camK_now[1, 1]
         ux = camK_now[0, 2]
         uy = camK_now[1, 2]
-
+        #
         x_now = (x_now - ux) * dp_now / fx
         y_now = (y_now - uy) * dp_now / fy
-
+        # In this situation,
+        # the x-coordinate, y-coordinate, and z-coordinate refer to the 3D spatial coordinates of the points in the camera frame.
+        # The x-coordinate and y-coordinate correspond to the pixel coordinates of the points in the 2D image plane,
+        # while the z-coordinate represents the distance of each point from the camera,
+        # expressed in metric units such as meters. #
+        # Once these 3D coordinates have been obtained,
+        # they can be used for further processing or analysis,
+        # such as object tracking, 3D reconstruction, or augmented reality applications.
         p_n_now = torch.cat([x_now[fuse_mask > 0].view(-1, 1),
                              y_now[fuse_mask > 0].view(-1, 1),
                              dp_now[fuse_mask > 0].view(-1, 1)], dim=1)
