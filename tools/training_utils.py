@@ -3,7 +3,7 @@ import numpy as np
 import absl.flags as flags
 
 FLAGS = flags.FLAGS
-from mmcv import Config
+from mmengine.config import Config
 from tools.solver_utils import build_lr_scheduler, build_optimizer_with_params
 
 

@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "evaluation",
+            "type": "python",
+            "request": "launch",
+            "program": "/GPV_Pose/evaluation/evaluate.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--dataset", "Real", 
+                "--dataset_dir", "/data/real",
+                "--detection_dir", "/data/real/segmentation_results",
+                "--model_save", "result",
+                "--resume_model", "modelckpt/gpv_pose_update.pth",
+                "--device", "cuda:0",
+                "--resume", "1",
+                "--train", "0"
+            ]
+        },
+        {
+            "name": "train",
+            "type": "python",
+            "request": "launch",
+            "program": "/GPV_Pose/engine/train.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--dataset", "Real", 
+                "--dataset_dir", "/data/real",
+                "--detection_dir", "/data/real/segmentation_results",
+                "--model_save", "result",
+                // "--resume_model", "modelckpt/gpv_pose_update.pth",
+                "--device", "cuda:0",
+                "--resume", "0",
+                "--num_workers", "24",
+                "--batch_size", "24",
+            ]
+        },
+    ]
+}

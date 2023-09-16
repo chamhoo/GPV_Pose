@@ -9,6 +9,7 @@ import _pickle as cPickle
 from config.config import *
 from datasets.data_augmentation import defor_2D, get_rotation
 FLAGS = flags.FLAGS
+from mmengine import load
 
 import torch
 from PIL import Image
@@ -146,7 +147,7 @@ class PoseDataset(data.Dataset):
         self.real_intrinsics = np.array([[591.0125, 0, 322.525], [0, 590.16775, 244.11084], [0, 0, 1]], dtype=np.float)
 
         self.invaild_list = []
-        self.mug_sym = mmcv.load(os.path.join(self.data_dir, 'Real/train/mug_handle.pkl'))
+        self.mug_sym = load(os.path.join(self.data_dir, 'Real/train/mug_handle.pkl'))
 
         print('{} images found.'.format(self.length))
         print('{} models loaded.'.format(len(self.models)))

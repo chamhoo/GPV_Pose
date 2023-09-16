@@ -4,6 +4,7 @@ import random
 import mmcv
 import torch
 from absl import app
+from tqdm import tqdm
 
 from config.config import *
 from tools.training_utils import build_lr_rate, get_gt_v, build_optimizer
@@ -18,7 +19,7 @@ import time
 import tensorflow as tf
 from tools.eval_utils import setup_logger, compute_sRT_errors
 torch.autograd.set_detect_anomaly(True)
-device = 'cuda'
+device = 'cuda:0'
 
 def train(argv):
     if not os.path.exists(FLAGS.model_save):
@@ -87,10 +88,9 @@ def train(argv):
                                                        sampler=train_sampler,
                                                        num_workers=FLAGS.num_workers, pin_memory=True)
         network.train()
-
         #################################
-        for i, data in enumerate(train_dataloader, 1):
-
+        for i, data in tqdm(enumerate(train_dataloader, 1)):
+            print(data.keys())
             output_dict, loss_dict \
                 = network(rgb=data['roi_img'].to(device), depth=data['roi_depth'].to(device),
                           depth_normalize=data['depth_normalize'].to(device),
